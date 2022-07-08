@@ -4,13 +4,11 @@
 
 ## Description
 
-A simple TODO application under Docker environment.
+A simple Dockerized Nest application.
 * NestJS
 * TypeORM
-* PostgreSQL
+* PostgreSQL (for local testing)
 * Swagger
-* PGadmin4
-* JWT
 * Docker
 
 Go to [the NestJS docs](https://docs.nestjs.com/) for more information.
