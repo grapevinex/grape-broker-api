@@ -64,3 +64,10 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## Resources
+For this service we will be intergrating alpaca's broker api:
+https://alpaca.markets/docs/api-references/broker-api/
+
+For postman endpoints download postman and import the collection:
+https://github.com/alpacahq/alpaca-postman/blob/master/Broker%20API.postman_collection.json
