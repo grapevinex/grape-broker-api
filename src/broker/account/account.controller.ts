@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common'
-import { ApiResponse, ApiTags } from '@nestjs/swagger'
-import { Account } from '../../entities/account.entity'
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Observable } from 'rxjs';
 import { CreateAccountDto } from '../../dtos/create-account.dto'
 import { AlpacaService } from '../../alpaca/services/alpaca.service'
 import { AccountDto } from '../../dtos/account.dto';
@@ -14,13 +14,19 @@ export class AccountController {
   constructor(private alpacaService: AlpacaService) {}
 
   @Get('/:id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+    format: 'uuid',
+    description: 'Account identifier'
+  })
   @ApiResponse({
     status: 200,
     description: 'Returns a specific account',
-    type: Account,
+    type: AccountDto,
   })
-  getOne(@Param('id') id: string): Account {
-    return {}
+  getOne(@Param('id') id: string): Observable<AccountDto> {
+    return this.alpacaService.getAccount(id)
   }
 
   @ApiResponse({
