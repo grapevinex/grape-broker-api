@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common'
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Observable } from 'rxjs';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Observable } from 'rxjs'
 import { CreateAccountDto } from '../../dtos/create-account.dto'
 import { AlpacaService } from '../../alpaca/services/alpaca.service'
-import { AccountDto } from '../../dtos/account.dto';
+import { AccountDto } from '../../dtos/account.dto'
 
 @ApiTags('Broker account')
 @Controller({
@@ -18,7 +18,7 @@ export class AccountController {
     name: 'id',
     type: String,
     format: 'uuid',
-    description: 'Account identifier'
+    description: 'Account identifier',
   })
   @ApiResponse({
     status: 200,
@@ -36,7 +36,7 @@ export class AccountController {
   })
   @ApiResponse({
     status: 409,
-    description: 'An account with the requested email address already exists'
+    description: 'An account with the requested email address already exists',
   })
   @ApiResponse({
     status: 422,
