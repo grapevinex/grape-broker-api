@@ -1,0 +1,12 @@
+on:
+  pull_request:
+    types:
+      - closed
+    branches: ['main']
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    uses: grapevinex/grape-broker-api/.github/workflows/deploy.yml
+    with:
+      ENV: staging
