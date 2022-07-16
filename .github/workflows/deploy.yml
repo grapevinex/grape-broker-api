@@ -6,8 +6,6 @@ on:
       ENV:
         required: true
         type: string
-  env:
-    AWS_REGION: "us-east-2"
 
 jobs:
   deploy-job:
@@ -22,7 +20,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: us-east-2
           role-to-assume: arn:aws:iam::317005109545:role/GithubActions
           role-session-name: Deploy_${{inputs.ENV}}
       - uses: actions/checkout@v3
