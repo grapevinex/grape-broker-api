@@ -1,18 +1,20 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AccountDto, AccountStatus } from '../../dtos/account.dto'
-import { AlpacaService } from '../../alpaca/services/alpaca.service'
-import { SubmitCIPDto } from '../../dtos/submit-cip.dto'
+import { AlpacaService } from '../alpaca/services/alpaca.service'
+import { AccountDto, AccountStatus } from './dtos/account.dto'
+import { SubmitCIPDto } from './dtos/submit-cip.dto'
+import { Observable } from 'rxjs'
+import { CreateAccountDto } from './dtos/create-account.dto'
 
 @ApiTags('Broker accounts')
 @Controller({
-  path: 'broker/accounts',
+  path: 'broker',
   version: '1',
 })
-export class AccountsController {
+export class BrokerAccountsController {
   constructor(private alpacaService: AlpacaService) {}
 
-  @Get()
+  @Get('accounts')
   @ApiResponse({
     status: 200,
     type: [AccountDto],
@@ -80,11 +82,50 @@ export class AccountsController {
   @ApiResponse({
     status: 422,
   })
-  @Post(':id/cip')
+  @Post('accounts/:id/cip')
   uploadCIPInformation(
     @Param('id') id: string,
     @Body() submitCIPDto: SubmitCIPDto,
   ) {
     return this.alpacaService.uploadCIPInformation(id, submitCIPDto)
+  }
+
+  @Get('account/:id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+    format: 'uuid',
+    description: 'Account identifier',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns a specific account',
+    type: AccountDto,
+  })
+  getOne(@Param('id') id: string): Observable<AccountDto> {
+    return this.alpacaService.getAccount(id)
+  }
+
+  @ApiResponse({
+    status: 201,
+    description: 'The account has been successfully created.',
+    type: AccountDto,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'An account with the requested email address already exists',
+  })
+  @ApiResponse({
+    status: 422,
+    description:
+      'Onfido applicant not yet created for account. If you haven’t already contacted Alapca to enable Onfido, please do so.',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Some server error occurred. Please contact Alpaca.',
+  })
+  @Post('account')
+  create(@Body() createAccountDto: CreateAccountDto) {
+    return this.alpacaService.createAccount(createAccountDto)
   }
 }

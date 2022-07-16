@@ -1,9 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import { catchError, map, Observable } from 'rxjs'
-import { CreateAccountDto } from '../../dtos/create-account.dto'
-import { AccountDto, AccountStatus } from '../../dtos/account.dto'
-import { SubmitCIPDto } from '../../dtos/submit-cip.dto'
+import { AccountDto, AccountStatus } from '../../broker/dtos/account.dto'
+import { CreateAccountDto } from '../../broker/dtos/create-account.dto'
+import { SubmitCIPDto } from '../../broker/dtos/submit-cip.dto'
 
 export interface GetAllAccountsOptions {
   query?: string
