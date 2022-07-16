@@ -1,9 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger'
-
-export enum CIPApprovalStatus {
-  approved = 'approved',
-  rejected = 'rejected',
-}
+import {
+  AccountStatus,
+  CryptoStatus,
+  CipApprovalStatus,
+  CipResult,
+  CipStatus,
+  TaxIdType,
+  VisaType,
+  FundingSourceType,
+  EmploymentStatus,
+  AgreementType,
+  EnabledAssets,
+  DisclosureContextType,
+} from '../interface/accounts.interface'
 
 export class Kyc {
   @ApiProperty({
@@ -103,9 +112,9 @@ export class Kyc {
   check_completed_at: string
 
   @ApiProperty({
-    enum: CIPApprovalStatus,
+    enum: CipApprovalStatus,
   })
-  approval_status: CIPApprovalStatus
+  approval_status: CipApprovalStatus
 
   @ApiProperty({
     type: String,
@@ -125,15 +134,7 @@ export class Kyc {
   approved_at: string
 }
 
-export enum CIPResult {
-  clear = 'clear',
-}
-
-export enum CIPStatus {
-  complete = 'complete',
-}
-
-export class CIPDocument {
+export class CipDocument {
   @ApiProperty({
     type: String,
     format: 'uuid',
@@ -142,16 +143,16 @@ export class CIPDocument {
   id: string
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall result of specific check',
   })
-  result: CIPResult
+  result: CipResult
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall status of specific check',
   })
-  status: CIPStatus
+  status: CipStatus
 
   @ApiProperty({
     type: String,
@@ -220,36 +221,36 @@ export class CIPDocument {
   nationality?: string
 
   @ApiProperty({
-    enum: () => CIPResult,
+    enum: () => CipResult,
     required: false,
     description:
       'Checks whether the age calculated from the document’s date of birth data point is greater than or equal to the minimum accepted age set at account level',
   })
-  age_validation?: CIPResult
+  age_validation?: CipResult
 
   @ApiProperty({
-    enum: () => CIPResult,
+    enum: () => CipResult,
     required: false,
     description:
       'Checks whether the image of the document has been found in our internal database of compromised documents',
   })
-  compromised_document?: CIPResult
+  compromised_document?: CipResult
 
   @ApiProperty({
-    enum: () => CIPStatus,
+    enum: () => CipStatus,
     required: false,
     description:
       'Checks whether the document has been identified as lost, stolen or otherwise compromised',
   })
-  police_record?: CIPStatus
+  police_record?: CipStatus
 
   @ApiProperty({
-    enum: () => CIPResult,
+    enum: () => CipResult,
     required: false,
     description:
       'Checks whether data on the document is consistent with data provided when creating an applicant through the API',
   })
-  data_comparison?: CIPResult
+  data_comparison?: CipResult
 
   @ApiProperty({
     type: Object,
@@ -260,12 +261,12 @@ export class CIPDocument {
   data_comparison_breakdown?: Record<string, unknown>
 
   @ApiProperty({
-    enum: () => CIPResult,
+    enum: () => CipResult,
     required: false,
     description:
       'Checks whether the document was of sufficient quality to verify',
   })
-  image_integrity: CIPResult
+  image_integrity: CipResult
 
   @ApiProperty({
     type: Object,
@@ -284,7 +285,7 @@ export class CIPDocument {
   visual_authenticity?: Record<string, unknown>
 }
 
-export class CIPPhoto {
+export class CipPhoto {
   @ApiProperty({
     type: String,
     format: 'uuid',
@@ -293,16 +294,16 @@ export class CIPPhoto {
   id: string
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall result of specific check',
   })
-  result: CIPResult
+  result: CipResult
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall status of specific check',
   })
-  status: CIPStatus
+  status: CipStatus
 
   @ApiProperty({
     type: String,
@@ -311,11 +312,11 @@ export class CIPPhoto {
   created_at: string
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description:
       'Checks whether the face in the document matches the face in the live photo',
   })
-  face_comparison: CIPResult
+  face_comparison: CipResult
 
   @ApiProperty({
     type: Object,
@@ -326,12 +327,12 @@ export class CIPPhoto {
   face_comparison_breakdown: Record<string, unknown>
 
   @ApiProperty({
-    enum: () => CIPResult,
+    enum: () => CipResult,
     required: false,
     description:
       'Checks whether the quality and integrity of the uploaded files were sufficient to perform a face comparison',
   })
-  image_integrity: CIPResult
+  image_integrity: CipResult
 
   @ApiProperty({
     type: Object,
@@ -350,7 +351,7 @@ export class CIPPhoto {
   visual_authenticity?: Record<string, unknown>
 }
 
-export class CIPIdentity {
+export class CipIdentity {
   @ApiProperty({
     type: String,
     format: 'uuid',
@@ -359,16 +360,16 @@ export class CIPIdentity {
   id: string
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall result of specific check',
   })
-  result: CIPResult
+  result: CipResult
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall status of specific check',
   })
-  status: CIPStatus
+  status: CipStatus
 
   @ApiProperty({
     type: String,
@@ -377,11 +378,11 @@ export class CIPIdentity {
   created_at: string
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Represents the matched address for the applicant',
     required: false,
   })
-  matched_address?: CIPResult
+  matched_address?: CipResult
 
   @ApiProperty({
     type: Object,
@@ -392,12 +393,12 @@ export class CIPIdentity {
   matched_addresses?: Record<string, unknown>
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description:
       'Shows the total number of sources found for applicant’s identity',
     required: false,
   })
-  sources: CIPResult
+  sources: CipResult
 
   @ApiProperty({
     type: Object,
@@ -408,10 +409,10 @@ export class CIPIdentity {
   sources_breakdown?: Record<string, unknown>
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Result if it was cleared against a data source',
   })
-  address: CIPResult
+  address: CipResult
 
   @ApiProperty({
     type: Object,
@@ -422,10 +423,10 @@ export class CIPIdentity {
   address_breakdown?: Record<string, unknown>
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Result if it was cleared against a data source',
   })
-  date_of_birth: CIPResult
+  date_of_birth: CipResult
 
   @ApiProperty({
     type: Object,
@@ -436,7 +437,7 @@ export class CIPIdentity {
   date_of_birth_breakdown?: Record<string, unknown>
 }
 
-export class CIPWatchlist {
+export class CipWatchlist {
   @ApiProperty({
     type: String,
     format: 'uuid',
@@ -445,16 +446,16 @@ export class CIPWatchlist {
   id: string
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall result of specific check',
   })
-  result: CIPResult
+  result: CipResult
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     description: 'Overall status of specific check',
   })
-  status: CIPStatus
+  status: CipStatus
 
   @ApiProperty({
     type: String,
@@ -470,31 +471,428 @@ export class CIPWatchlist {
   records: Record<string, unknown>
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     required: false,
   })
-  politically_exposed_person: CIPStatus
+  politically_exposed_person: CipStatus
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     required: false,
   })
-  sanction: CIPStatus
+  sanction: CipStatus
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     required: false,
   })
-  adverse_media: CIPStatus
+  adverse_media: CipStatus
 
   @ApiProperty({
-    enum: CIPResult,
+    enum: CipResult,
     required: false,
   })
-  monitored_lists: CIPStatus
+  monitored_lists: CipStatus
 }
 
-export class SubmitCIPDto {
+export class Contact {
+  @ApiProperty({
+    type: String,
+  })
+  email_address: string
+  @ApiProperty({
+    type: String,
+  })
+  phone_number: string
+  @ApiProperty({
+    type: String,
+  })
+  street_address: string
+  unit?: string
+  @ApiProperty({
+    type: String,
+  })
+  city: string
+  state?: string
+  postal_code?: string
+  @ApiProperty({
+    type: String,
+    example: 'USA',
+  })
+  country: string
+}
+
+export class Identity {
+  @ApiProperty({
+    type: String,
+  })
+  given_name: string
+
+  @ApiProperty({
+    type: String,
+  })
+  middle_name: string
+
+  @ApiProperty({
+    type: String,
+  })
+  family_name: string
+
+  @ApiProperty({
+    type: String,
+  })
+  date_of_birth: string
+
+  @ApiProperty({
+    type: String,
+  })
+  tax_id: string
+
+  @ApiProperty({
+    enum: TaxIdType,
+  })
+  tax_id_type: TaxIdType
+
+  @ApiProperty({
+    type: Boolean,
+  })
+  country_of_citizenship: string
+
+  @ApiProperty({
+    type: Boolean,
+  })
+  country_of_birth: string
+
+  @ApiProperty({
+    type: Boolean,
+  })
+  country_of_tax_residence: string
+
+  @ApiProperty({
+    enum: VisaType,
+    required: false,
+  })
+  visa_type?: VisaType
+
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  visa_expiration_date?: string
+
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  date_of_departure_from_usa?: string
+
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+  })
+  permanent_resident?: boolean
+
+  @ApiProperty({
+    enum: FundingSourceType,
+  })
+  funding_source: FundingSourceType[]
+
+  @ApiProperty({
+    oneOf: [{ type: 'string' }, { type: 'number' }],
+    required: false,
+  })
+  annual_income_min?: string | number
+
+  @ApiProperty({
+    oneOf: [{ type: 'string' }, { type: 'number' }],
+    required: false,
+  })
+  annual_income_max?: string | number
+
+  @ApiProperty({
+    oneOf: [{ type: 'string' }, { type: 'number' }],
+    required: false,
+  })
+  liquid_net_worth_min?: string | number
+
+  @ApiProperty({
+    oneOf: [{ type: 'string' }, { type: 'number' }],
+    required: false,
+  })
+  liquid_net_worth_max?: string | number
+
+  @ApiProperty({
+    oneOf: [{ type: 'string' }, { type: 'number' }],
+    required: false,
+  })
+  total_net_worth_min?: string | number
+
+  @ApiProperty({
+    oneOf: [{ type: 'string' }, { type: 'number' }],
+  })
+  total_net_worth_max?: string | number
+
+  @ApiProperty({
+    type: Object,
+    description: 'Any additional information used for KYC purposes',
+  })
+  extra: object
+}
+
+export class DisclosureContext {
+  @ApiProperty({
+    enum: DisclosureContextType,
+  })
+  context_type: DisclosureContextType
+
+  @ApiProperty({
+    type: String,
+    description:
+      'Required if context_type is AFFILIATE_FIRM or CONTROLLED_FIRM',
+  })
+  company_name?: string
+
+  @ApiProperty({
+    type: String,
+    description:
+      'Required if context_type is AFFILIATE_FIRM or CONTROLLED_FIRM',
+  })
+  company_street_address?: string
+
+  @ApiProperty({
+    type: String,
+    description:
+      'Required if context_type is AFFILIATE_FIRM or CONTROLLED_FIRM',
+  })
+  company_city?: string
+
+  @ApiProperty({
+    type: String,
+    description: 'Required if company_country is USA',
+  })
+  company_state?: string
+
+  @ApiProperty({
+    type: String,
+    description:
+      'Required if context_type is AFFILIATE_FIRM or CONTROLLED_FIRM',
+  })
+  company_country?: string
+
+  @ApiProperty({
+    type: String,
+    description:
+      'Required if context_type is AFFILIATE_FIRM or CONTROLLED_FIRM',
+  })
+  company_compliance_email?: string
+
+  @ApiProperty({
+    type: String,
+    description: 'Required if context_type is IMMEDIATE_FAMILY_EXPOSED',
+  })
+  given_name?: string
+
+  @ApiProperty({
+    type: String,
+    description: 'Required if context_type is IMMEDIATE_FAMILY_EXPOSED',
+  })
+  family_name?: string
+}
+
+export class Disclosures {
+  @ApiProperty({
+    type: Boolean,
+    description:
+      'Whether user holds a controlling position in a publicly traded company, member of the board of directors or has policy making abilities in a publicly traded company.',
+  })
+  is_control_person: boolean
+
+  @ApiProperty({
+    type: Boolean,
+  })
+  is_affiliated_exchange_or_finra: boolean
+
+  @ApiProperty({
+    type: Boolean,
+  })
+  is_politically_exposed: boolean
+
+  @ApiProperty({
+    type: Boolean,
+    description:
+      'If user immediate family member (sibling, husband/wife, child, parent) is either politically exposed or holds a control position.',
+  })
+  immediate_family_exposed: boolean
+
+  @ApiProperty({
+    type: () => DisclosureContext,
+  })
+  context?: DisclosureContext
+
+  @ApiProperty({
+    enum: EmploymentStatus,
+  })
+  employment_status?: EmploymentStatus
+
+  @ApiProperty({
+    type: String,
+  })
+  employer_name?: string
+
+  @ApiProperty({
+    type: String,
+  })
+  employer_address?: string
+
+  @ApiProperty({
+    type: String,
+  })
+  employment_position?: string
+}
+
+export class Agreement {
+  @ApiProperty({
+    enum: AgreementType,
+  })
+  agreement: AgreementType
+
+  @ApiProperty({
+    type: String,
+    format: 'timestamp',
+  })
+  signed_at: string
+
+  @ApiProperty({
+    type: String,
+  })
+  ip_address: string
+
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  revision?: string
+}
+
+export class Document {
+  document_type: DocumentType
+
+  @ApiProperty({
+    type: String,
+  })
+  document_sub_type: string
+
+  @ApiProperty({
+    type: String,
+  })
+  content: string
+
+  @ApiProperty({
+    type: String,
+  })
+  mime_type: string
+}
+
+export class TrustedContact {
+  @ApiProperty({
+    type: String,
+  })
+  given_name: string
+
+  @ApiProperty({
+    type: String,
+  })
+  family_name: string
+}
+
+export class AccountDto {
+  @ApiProperty({
+    type: String,
+    format: 'uuid',
+    description: 'UUID that identifies the account for later reference',
+  })
+  id: string
+
+  @ApiProperty({
+    type: String,
+    description: 'A human-readable account number',
+  })
+  account_number: string
+
+  @ApiProperty({
+    enum: AccountStatus,
+    example: AccountStatus.SUBMITTED,
+  })
+  status: AccountStatus
+
+  @ApiProperty({
+    enum: CryptoStatus,
+    example: CryptoStatus.INACTIVE,
+  })
+  crypto_status: CryptoStatus
+
+  @ApiProperty({
+    type: String,
+    example: 'USD',
+  })
+  currency: string
+
+  @ApiProperty({
+    type: String,
+    description:
+      'EOD equity calculation (cash + long market value + short market value)',
+  })
+  last_equity: string
+
+  @ApiProperty({
+    type: String,
+    format: 'date-time',
+    example: '2022-07-14T17:25:21.145057Z',
+  })
+  created_at: string
+}
+
+export class CreateAccountDto {
+  @ApiProperty({
+    enum: EnabledAssets,
+    required: false,
+  })
+  enabled_assets?: EnabledAssets
+
+  @ApiProperty({
+    type: () => Contact,
+  })
+  contact: Contact
+
+  @ApiProperty({
+    type: () => Identity,
+  })
+  identity: Identity
+
+  @ApiProperty({
+    type: () => Disclosures,
+  })
+  disclosures: Disclosures
+
+  @ApiProperty({
+    type: () => Agreement,
+  })
+  agreements: Agreement[]
+
+  @ApiProperty({
+    type: () => Document,
+    required: false,
+  })
+  documents?: Document[]
+
+  @ApiProperty({
+    type: () => TrustedContact,
+    required: false,
+  })
+  trusted_contact?: TrustedContact
+}
+
+export class CipDto {
   @ApiProperty({
     type: String,
     required: false,
@@ -508,26 +906,26 @@ export class SubmitCIPDto {
   kyc?: Kyc
 
   @ApiProperty({
-    type: () => CIPDocument,
+    type: () => CipDocument,
     required: false,
   })
-  document?: CIPDocument
+  document?: CipDocument
 
   @ApiProperty({
-    type: () => CIPPhoto,
+    type: () => CipPhoto,
     required: false,
   })
-  photo: CIPPhoto
+  photo: CipPhoto
 
   @ApiProperty({
-    type: () => CIPIdentity,
+    type: () => CipIdentity,
     required: false,
   })
-  identity: CIPIdentity
+  identity: CipIdentity
 
   @ApiProperty({
-    type: () => CIPWatchlist,
+    type: () => CipWatchlist,
     required: false,
   })
-  watchlist: CIPWatchlist
+  watchlist: CipWatchlist
 }

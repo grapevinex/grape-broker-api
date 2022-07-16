@@ -1,9 +1,12 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import { catchError, map, Observable } from 'rxjs'
-import { AccountDto, AccountStatus } from '../../broker/dtos/account.dto'
-import { CreateAccountDto } from '../../broker/dtos/create-account.dto'
-import { SubmitCIPDto } from '../../broker/dtos/submit-cip.dto'
+import {
+  AccountDto,
+  CreateAccountDto,
+  CipDto,
+} from '../../accounts/dto/accounts.dto'
+import { AccountStatus } from 'src/accounts/interface/accounts.interface'
 
 export interface GetAllAccountsOptions {
   query?: string
@@ -39,15 +42,15 @@ export class AlpacaService {
     )
   }
 
-  getAccountCIP(id: string) {
+  getAccountCip(id: string) {
     return this.httpService.get(`/v1/accounts/${id}/cip`).pipe(
       map((res) => res.data),
       catchError(this.errorHandler),
     )
   }
 
-  uploadCIPInformation(id: string, submitCIPDto: SubmitCIPDto) {
-    return this.httpService.post(`/v1/accounts/${id}/cip`, submitCIPDto).pipe(
+  createAccountCip(id: string, CipDto: CipDto) {
+    return this.httpService.post(`/v1/accounts/${id}/cip`, CipDto).pipe(
       map((res) => res.data),
       catchError(this.errorHandler),
     )

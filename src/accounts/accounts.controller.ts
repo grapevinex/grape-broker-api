@@ -1,17 +1,16 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AlpacaService } from '../alpaca/services/alpaca.service'
-import { AccountDto, AccountStatus } from './dtos/account.dto'
-import { SubmitCIPDto } from './dtos/submit-cip.dto'
+import { AlpacaService } from '../alpaca/service/alpaca.service'
+import { AccountDto, CreateAccountDto, CipDto } from './dto/accounts.dto'
 import { Observable } from 'rxjs'
-import { CreateAccountDto } from './dtos/create-account.dto'
+import { AccountStatus } from './interface/accounts.interface'
 
-@ApiTags('Broker accounts')
+@ApiTags('Accounts')
 @Controller({
   path: 'broker',
   version: '1',
 })
-export class BrokerAccountsController {
+export class AccountsController {
   constructor(private alpacaService: AlpacaService) {}
 
   @Get('accounts')
@@ -83,11 +82,8 @@ export class BrokerAccountsController {
     status: 422,
   })
   @Post('accounts/:id/cip')
-  uploadCIPInformation(
-    @Param('id') id: string,
-    @Body() submitCIPDto: SubmitCIPDto,
-  ) {
-    return this.alpacaService.uploadCIPInformation(id, submitCIPDto)
+  createAccountCip(@Param('id') id: string, @Body() CipDto: CipDto) {
+    return this.alpacaService.createAccountCip(id, CipDto)
   }
 
   @Get('account/:id')
@@ -127,5 +123,20 @@ export class BrokerAccountsController {
   @Post('account')
   create(@Body() createAccountDto: CreateAccountDto) {
     return this.alpacaService.createAccount(createAccountDto)
+  }
+
+  @ApiParam({
+    name: 'id',
+    type: String,
+    format: 'uuid',
+    description: 'Account identifier',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Requested resource not found',
+  })
+  @Get('account:id/cip')
+  getCipInformation(@Param('id') id: string) {
+    return this.alpacaService.getAccountCip(id)
   }
 }
