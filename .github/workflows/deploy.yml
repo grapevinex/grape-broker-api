@@ -5,6 +5,7 @@ on:
     inputs:
       ENV:
         required: true
+        type: string
 
 jobs:
   deploy-job:
