@@ -8,6 +8,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Run yamllint
+        run: |
+          yamllint .
       - run: echo "${{ github.repository }} repository has been cloned to the runner."
       - name: Install Dependencies
         run: |
@@ -16,9 +19,3 @@ jobs:
         run: |
           npm run lint
       - run: echo "This job's status is ${{ job.status }}."
-      - name: "Yamllint"
-        uses: karancode/yamllint-github-action@master
-        with:
-          yamllint_file_or_dir: "./github/"
-          yamllint_strict: true
-          yamllint_comment: false

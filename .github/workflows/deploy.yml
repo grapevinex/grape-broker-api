@@ -6,7 +6,6 @@ on:
       ENV:
         required: true
 
-
 jobs:
   deploy-job:
     runs-on: ubuntu-latest
@@ -20,11 +19,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: us-east-2
-        role-to-assume: arn:aws:iam::317005109545:role/GithubActions
-        role-session-name: Deploy_${{inputs.ENV}}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::317005109545:role/GithubActions
+          role-session-name: Deploy_${{inputs.ENV}}
       - run: npm ci
       - name: serverless deploy
         uses: serverless/github-action@v3.1
