@@ -1,0 +1,18 @@
+name: Lint
+
+on: [push]
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "${{ github.repository }} repository has been cloned to the runner."
+      - name: Install Dependencies
+        run: |
+          npm ci
+      - name: Lint
+        run: |
+          npm run lint
+      - run: echo "This job's status is ${{ job.status }}."
