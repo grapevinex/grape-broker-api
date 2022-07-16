@@ -11,7 +11,7 @@ jobs:
       - name: Run yamllint
         run: |
           yamllint .
-      - run: echo "${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "${{ github.repository }} cloned to the runner."
       - name: Install Dependencies
         run: |
           npm ci

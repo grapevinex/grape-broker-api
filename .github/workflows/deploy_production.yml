@@ -2,7 +2,6 @@ on:
   release:
     types: [published]
 
-
 jobs:
   deploy:
     uses: ./.github/workflows/deploy.yml
