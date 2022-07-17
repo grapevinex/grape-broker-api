@@ -14,7 +14,7 @@ jobs:
       - run: echo "${{ github.repository }} cloned to the runner."
       - name: Install Dependencies
         run: |
-          npm ci
+          npm i
       - name: Lint
         run: |
           npm run lint
