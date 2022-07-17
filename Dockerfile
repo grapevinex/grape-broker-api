@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copying file into APP directory of docker
-COPY ./package.json ./package-lock.json /app/
+COPY ./package.json /app/
 
 # Then install the NPM module
 RUN npm install
