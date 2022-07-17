@@ -69,23 +69,6 @@ export class AccountsController {
     })
   }
 
-  @ApiParam({
-    name: 'id',
-    type: String,
-    format: 'uuid',
-    description: 'Account identifier',
-  })
-  @ApiResponse({
-    status: 200,
-  })
-  @ApiResponse({
-    status: 422,
-  })
-  @Post('accounts/:id/cip')
-  createAccountCip(@Param('id') id: string, @Body() CipDto: CipDto) {
-    return this.alpacaService.createAccountCip(id, CipDto)
-  }
-
   @Get('account/:id')
   @ApiParam({
     name: 'id',
@@ -132,11 +115,28 @@ export class AccountsController {
     description: 'Account identifier',
   })
   @ApiResponse({
+    status: 200,
+  })
+  @ApiResponse({
+    status: 422,
+  })
+  @Post('accounts/:id/cip')
+  createAccountCip(@Param('id') id: string, @Body() CipDto: CipDto) {
+    return this.alpacaService.createAccountCip(id, CipDto)
+  }
+
+  @ApiParam({
+    name: 'id',
+    type: String,
+    format: 'uuid',
+    description: 'Account identifier',
+  })
+  @ApiResponse({
     status: 404,
     description: 'Requested resource not found',
   })
   @Get('account:id/cip')
-  getCipInformation(@Param('id') id: string) {
+  getAccountCip(@Param('id') id: string) {
     return this.alpacaService.getAccountCip(id)
   }
 }
