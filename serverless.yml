@@ -1,0 +1,24 @@
+service: grape-broker-api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  hello:
+    handler: src/handler.entry
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+plugins:
+  - serverless-plugin-typescript
+
+package:
+  individually: true
+  include:
+    - "!*"
+    - "!**"
+    - src/*.ts
