@@ -1,7 +1,7 @@
 import { DynamicModule, Global, Module } from '@nestjs/common'
 import { HttpModuleOptions } from '@nestjs/axios/dist/interfaces'
 import { HttpModule } from '@nestjs/axios'
-import { AlpacaService } from './service/alpaca.service'
+import { AlpacaAccountsService } from './service/alpaca.accounts.service'
 
 export interface AlpacaModuleOptions extends HttpModuleOptions {
   keyId: string
@@ -36,8 +36,8 @@ export class AlpacaModule {
           },
         }),
       ],
-      providers: [AlpacaService],
-      exports: [AlpacaService],
+      providers: [AlpacaAccountsService],
+      exports: [AlpacaAccountsService],
     }
   }
 }

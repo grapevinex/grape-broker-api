@@ -18,7 +18,7 @@ export interface GetAllAccountsOptions {
 }
 
 @Injectable()
-export class AlpacaService {
+export class AlpacaAccountsService {
   constructor(private httpService: HttpService) {}
 
   createAccount(createAccountDto: CreateAccountDto): Observable<AccountDto> {

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AlpacaService } from '../alpaca/service/alpaca.service'
+import { AlpacaAccountsService } from '../alpaca/service/alpaca.accounts.service'
 import { AccountDto, CreateAccountDto, CipDto } from './dto/accounts.dto'
 import { Observable } from 'rxjs'
 import { AccountStatus } from './interface/accounts.interface'
@@ -11,7 +11,7 @@ import { AccountStatus } from './interface/accounts.interface'
   version: '1',
 })
 export class AccountsController {
-  constructor(private alpacaService: AlpacaService) {}
+  constructor(private AlpacaAccountsService: AlpacaAccountsService) {}
 
   @Get('accounts')
   @ApiResponse({
@@ -59,7 +59,7 @@ export class AccountsController {
     @Query('sort') sort = 'desc',
     @Query('entities') entities?: string,
   ) {
-    return this.alpacaService.getAllAccounts({
+    return this.AlpacaAccountsService.getAllAccounts({
       query,
       created_after,
       created_before,
@@ -82,7 +82,7 @@ export class AccountsController {
     type: AccountDto,
   })
   getOne(@Param('id') id: string): Observable<AccountDto> {
-    return this.alpacaService.getAccount(id)
+    return this.AlpacaAccountsService.getAccount(id)
   }
 
   @ApiResponse({
@@ -105,7 +105,7 @@ export class AccountsController {
   })
   @Post('account')
   create(@Body() createAccountDto: CreateAccountDto) {
-    return this.alpacaService.createAccount(createAccountDto)
+    return this.AlpacaAccountsService.createAccount(createAccountDto)
   }
 
   @ApiParam({
@@ -122,7 +122,7 @@ export class AccountsController {
   })
   @Post('accounts/:id/cip')
   createAccountCip(@Param('id') id: string, @Body() CipDto: CipDto) {
-    return this.alpacaService.createAccountCip(id, CipDto)
+    return this.AlpacaAccountsService.createAccountCip(id, CipDto)
   }
 
   @ApiParam({
@@ -137,6 +137,6 @@ export class AccountsController {
   })
   @Get('account:id/cip')
   getAccountCip(@Param('id') id: string) {
-    return this.alpacaService.getAccountCip(id)
+    return this.AlpacaAccountsService.getAccountCip(id)
   }
 }
