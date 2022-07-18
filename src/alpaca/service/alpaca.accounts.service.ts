@@ -6,7 +6,8 @@ import {
   CreateAccountDto,
   CipDto,
 } from '../../accounts/dto/accounts.dto'
-import { AccountStatus } from 'src/accounts/interface/accounts.interface'
+import { AccountStatus } from '../../accounts/interface/accounts.interface'
+import { AssetDto } from '../../assets/dto/asset.dto'
 
 export interface GetAllAccountsOptions {
   query?: string
@@ -15,6 +16,11 @@ export interface GetAllAccountsOptions {
   status?: AccountStatus
   sort?: string
   entities?: string
+}
+
+export interface GetAssetsOptions {
+  assetClass: string
+  status: string
 }
 
 @Injectable()
@@ -60,6 +66,20 @@ export class AlpacaAccountsService {
     throw new HttpException(
       response.data.message ?? response.statusText,
       response.status,
+    )
+  }
+
+  getAssets(params: GetAssetsOptions): Observable<AssetDto[]> {
+    return this.httpService.get('/v1/assets', { params }).pipe(
+      map((res) => res.data),
+      catchError(this.errorHandler),
+    )
+  }
+
+  getAsset(assetId: string): Observable<AssetDto> {
+    return this.httpService.get(`/v1/assets/${assetId}`).pipe(
+      map((res) => res.data),
+      catchError(this.errorHandler),
     )
   }
 }
