@@ -4,4 +4,4 @@ pgadmin-data
 pgdata
 
 .env
-.serverless
+.serverless/*
