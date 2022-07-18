@@ -45,4 +45,11 @@ export class AlpacaAccountsService {
   createAccountCip(id: string, CipDto: CipDto) {
     return this.httpService.post(`/v1/accounts/${id}/cip`, CipDto)
   }
+
+  clock() {
+    return this.httpService.get('/v1/clock').pipe(
+      map((res) => res.data),
+      catchError(this.errorHandler),
+    )
+  }
 }
