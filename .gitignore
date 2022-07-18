@@ -5,3 +5,4 @@ pgdata
 
 .env
 .serverless/*
+.serverless

@@ -18,7 +18,7 @@ custom:
 
 plugins:
   - serverless-plugin-typescript
-  - serverless-plugin-warmup
+
 package:
   individually: true
   include:
