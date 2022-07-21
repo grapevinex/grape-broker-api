@@ -1,15 +1,27 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseFilters,
+  UseInterceptors,
+} from '@nestjs/common'
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AlpacaAccountsService } from '../alpaca/service/alpaca.accounts.service'
 import { AccountDto, CreateAccountDto, CipDto } from './dto/accounts.dto'
-import { Observable } from 'rxjs'
 import { AccountStatus } from './interface/accounts.interface'
+import { HttpExceptionFilter } from '../common/filters/http-expeption.filter'
+import { HttpResponseInterceptor } from '../common/interceptors/http-response.interceptor'
 
 @ApiTags('Accounts')
 @Controller({
   path: 'broker',
   version: '1',
 })
+@UseFilters(HttpExceptionFilter)
+@UseInterceptors(HttpResponseInterceptor)
 export class AccountsController {
   constructor(private AlpacaAccountsService: AlpacaAccountsService) {}
 
@@ -81,7 +93,7 @@ export class AccountsController {
     description: 'Returns a specific account',
     type: AccountDto,
   })
-  getOne(@Param('id') id: string): Observable<AccountDto> {
+  getOne(@Param('id') id: string) {
     return this.AlpacaAccountsService.getAccount(id)
   }
 

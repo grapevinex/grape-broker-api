@@ -7,7 +7,7 @@ import {
   CipDto,
 } from '../../accounts/dto/accounts.dto'
 import { AccountStatus } from '../../accounts/interface/accounts.interface'
-import { AssetDto } from '../../assets/dto/asset.dto'
+import { AxiosResponse } from 'axios'
 
 export interface GetAllAccountsOptions {
   query?: string
@@ -18,68 +18,31 @@ export interface GetAllAccountsOptions {
   entities?: string
 }
 
-export interface GetAssetsOptions {
-  assetClass: string
-  status: string
-}
-
 @Injectable()
 export class AlpacaAccountsService {
   constructor(private httpService: HttpService) {}
 
-  createAccount(createAccountDto: CreateAccountDto): Observable<AccountDto> {
-    return this.httpService.post('/v1/accounts', createAccountDto).pipe(
-      map((res) => res.data),
-      catchError(this.errorHandler),
-    )
+  createAccount(
+    createAccountDto: CreateAccountDto,
+  ): Observable<AxiosResponse<AccountDto>> {
+    return this.httpService.post('/v1/accounts', createAccountDto)
   }
 
-  getAccount(id: string): Observable<AccountDto> {
-    return this.httpService.get(`/v1/accounts/${id}`).pipe(
-      map((res) => res.data),
-      catchError(this.errorHandler),
-    )
+  getAccount(id: string): Observable<AxiosResponse<AccountDto>> {
+    return this.httpService.get(`/v1/accounts/${id}`)
   }
 
-  getAllAccounts(options: GetAllAccountsOptions): Observable<AccountDto[]> {
-    return this.httpService.get('/v1/accounts', { params: options }).pipe(
-      map((res) => res.data),
-      catchError(this.errorHandler),
-    )
+  getAllAccounts(
+    options: GetAllAccountsOptions,
+  ): Observable<AxiosResponse<AccountDto[]>> {
+    return this.httpService.get('/v1/accounts', { params: options })
   }
 
   getAccountCip(id: string) {
-    return this.httpService.get(`/v1/accounts/${id}/cip`).pipe(
-      map((res) => res.data),
-      catchError(this.errorHandler),
-    )
+    return this.httpService.get(`/v1/accounts/${id}/cip`)
   }
 
   createAccountCip(id: string, CipDto: CipDto) {
-    return this.httpService.post(`/v1/accounts/${id}/cip`, CipDto).pipe(
-      map((res) => res.data),
-      catchError(this.errorHandler),
-    )
-  }
-
-  private errorHandler({ response }): Observable<any> {
-    throw new HttpException(
-      response.data.message ?? response.statusText,
-      response.status,
-    )
-  }
-
-  getAssets(params: GetAssetsOptions): Observable<AssetDto[]> {
-    return this.httpService.get('/v1/assets', { params }).pipe(
-      map((res) => res.data),
-      catchError(this.errorHandler),
-    )
-  }
-
-  getAsset(assetId: string): Observable<AssetDto> {
-    return this.httpService.get(`/v1/assets/${assetId}`).pipe(
-      map((res) => res.data),
-      catchError(this.errorHandler),
-    )
+    return this.httpService.post(`/v1/accounts/${id}/cip`, CipDto)
   }
 }
