@@ -1,10 +1,10 @@
-import { HttpException, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
-import { catchError, map, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import {
   AccountDto,
-  CreateAccountDto,
   CipDto,
+  CreateAccountDto,
 } from '../../accounts/dto/accounts.dto'
 import { AccountStatus } from '../../accounts/interface/accounts.interface'
 import { AxiosResponse } from 'axios'

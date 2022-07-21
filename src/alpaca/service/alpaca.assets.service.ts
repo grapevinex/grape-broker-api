@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { catchError, map, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { AssetDto } from '../../assets/dto/asset.dto'
 import { HttpService } from '@nestjs/axios'
 import { AxiosResponse } from 'axios'
