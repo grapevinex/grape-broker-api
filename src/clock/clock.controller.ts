@@ -1,4 +1,4 @@
-import { Controller, Get} from '@nestjs/common'
+import { Controller, Get } from '@nestjs/common'
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
 import { ClockDto } from './dto/clock.dto'
 import { ClockService } from './service/clock.service'
