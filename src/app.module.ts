@@ -17,7 +17,6 @@ import alpacaModuleConfig from './alpaca.config'
     AccountsModule,
     AssetsModule,
     ClockModule,
-
   ],
   providers: [],
 })
