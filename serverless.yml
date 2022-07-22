@@ -6,12 +6,15 @@ provider:
   runtime: nodejs14.x
 
 functions:
-  hello:
+  grape-broker-api:
     handler: src/handler.entry
     events:
       - httpApi:
           path: /
           method: get
+custom:
+  serverlessPluginTypescript:
+    tsConfigFileLocation: "./tsconfig.build.json"
 
 plugins:
   - serverless-plugin-typescript
