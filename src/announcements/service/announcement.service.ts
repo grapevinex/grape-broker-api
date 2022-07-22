@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
-import {
-  CorporateActionType,
-  DateType,
-} from '../../announcements/dto/announcement.dto'
+import { CorporateActionType, DateType } from '../dto/announcement.dto'
 
 export interface GetAllAnnouncementsParams {
   ca_types: CorporateActionType[]
@@ -15,7 +12,7 @@ export interface GetAllAnnouncementsParams {
 }
 
 @Injectable()
-export class AlpacaAnnouncementService {
+export class AnnouncementService {
   constructor(private httpService: HttpService) {}
 
   getAllAnnouncements(params: GetAllAnnouncementsParams) {

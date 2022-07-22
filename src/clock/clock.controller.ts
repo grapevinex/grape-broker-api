@@ -1,19 +1,15 @@
-import { Controller, Get, UseFilters, UseInterceptors } from '@nestjs/common'
+import { Controller, Get} from '@nestjs/common'
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
 import { ClockDto } from './dto/clock.dto'
-import { AlpacaClockService } from '../alpaca/service/alpaca.clock.service'
-import { HttpExceptionFilter } from '../common/filters/http-expeption.filter'
-import { HttpResponseInterceptor } from '../common/interceptors/http-response.interceptor'
+import { ClockService } from './service/clock.service'
 
 @ApiTags('Clock')
 @Controller({
   path: 'clock',
   version: '1',
 })
-@UseFilters(HttpExceptionFilter)
-@UseInterceptors(HttpResponseInterceptor)
 export class ClockController {
-  constructor(private alpacaClockService: AlpacaClockService) {}
+  constructor(private ClockService: ClockService) {}
 
   @ApiResponse({
     status: 200,
@@ -21,6 +17,6 @@ export class ClockController {
   })
   @Get()
   clock() {
-    return this.alpacaClockService.clock()
+    return this.ClockService.clock()
   }
 }

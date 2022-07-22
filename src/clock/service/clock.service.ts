@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 
 @Injectable()
-export class AlpacaClockService {
+export class ClockService {
   constructor(private httpService: HttpService) {}
 
   clock() {

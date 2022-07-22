@@ -1,6 +1,11 @@
-import { AlpacaModuleOptions } from './alpaca/alpaca.module'
+import { HttpModuleOptions } from '@nestjs/axios'
 
-const alpacaConfig = (): AlpacaModuleOptions => ({
+export interface AlpacaConfig extends HttpModuleOptions {
+  keyId: string
+  secretKey: string
+}
+
+const alpacaConfig = (): AlpacaConfig => ({
   baseURL: process.env.ALPACA_HOST,
   keyId: process.env.ALPACA_API_KEY,
   secretKey: process.env.ALPACA_API_SECRET,

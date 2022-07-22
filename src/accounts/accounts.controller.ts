@@ -1,29 +1,16 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  UseFilters,
-  UseInterceptors,
-} from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AlpacaAccountsService } from '../alpaca/service/alpaca.accounts.service'
+import { AccountsService } from './service/accounts.service'
 import { AccountDto, CreateAccountDto, CipDto } from './dto/accounts.dto'
 import { AccountStatus } from './interface/accounts.interface'
-import { HttpExceptionFilter } from '../common/filters/http-expeption.filter'
-import { HttpResponseInterceptor } from '../common/interceptors/http-response.interceptor'
 
 @ApiTags('Accounts')
 @Controller({
   path: 'broker',
   version: '1',
 })
-@UseFilters(HttpExceptionFilter)
-@UseInterceptors(HttpResponseInterceptor)
 export class AccountsController {
-  constructor(private AlpacaAccountsService: AlpacaAccountsService) {}
+  constructor(private AccountsService: AccountsService) {}
 
   @Get('accounts')
   @ApiResponse({
@@ -71,7 +58,7 @@ export class AccountsController {
     @Query('sort') sort = 'desc',
     @Query('entities') entities?: string,
   ) {
-    return this.AlpacaAccountsService.getAllAccounts({
+    return this.AccountsService.getAllAccounts({
       query,
       created_after,
       created_before,
@@ -94,7 +81,7 @@ export class AccountsController {
     type: AccountDto,
   })
   getOne(@Param('id') id: string) {
-    return this.AlpacaAccountsService.getAccount(id)
+    return this.AccountsService.getAccount(id)
   }
 
   @ApiResponse({
@@ -117,7 +104,7 @@ export class AccountsController {
   })
   @Post('account')
   create(@Body() createAccountDto: CreateAccountDto) {
-    return this.AlpacaAccountsService.createAccount(createAccountDto)
+    return this.AccountsService.createAccount(createAccountDto)
   }
 
   @ApiParam({
@@ -134,7 +121,7 @@ export class AccountsController {
   })
   @Post('accounts/:id/cip')
   createAccountCip(@Param('id') id: string, @Body() CipDto: CipDto) {
-    return this.AlpacaAccountsService.createAccountCip(id, CipDto)
+    return this.AccountsService.createAccountCip(id, CipDto)
   }
 
   @ApiParam({
@@ -149,6 +136,6 @@ export class AccountsController {
   })
   @Get('account:id/cip')
   getAccountCip(@Param('id') id: string) {
-    return this.AlpacaAccountsService.getAccountCip(id)
+    return this.AccountsService.getAccountCip(id)
   }
 }

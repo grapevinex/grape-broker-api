@@ -1,26 +1,15 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Query,
-  UseFilters,
-  UseInterceptors,
-} from '@nestjs/common'
+import { Controller, Get, Param, Query } from '@nestjs/common'
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AlpacaAssetsService } from '../alpaca/service/alpaca.assets.service'
+import { AssetsService } from './service/assets.service'
 import { AssetDto } from './dto/asset.dto'
-import { HttpExceptionFilter } from '../common/filters/http-expeption.filter'
-import { HttpResponseInterceptor } from '../common/interceptors/http-response.interceptor'
 
 @ApiTags('Assets')
 @Controller({
   path: 'assets',
   version: '1',
 })
-@UseFilters(HttpExceptionFilter)
-@UseInterceptors(HttpResponseInterceptor)
 export class AssetsController {
-  constructor(private alpacaAssetsService: AlpacaAssetsService) {}
+  constructor(private AssetsService: AssetsService) {}
 
   @ApiResponse({
     status: 200,
@@ -41,7 +30,7 @@ export class AssetsController {
     @Query('status') status = 'all',
     @Query('asset_class') assetClass?: string,
   ) {
-    return this.alpacaAssetsService.getAssets({ status, assetClass })
+    return this.AssetsService.getAssets({ status, assetClass })
   }
 
   @ApiResponse({
@@ -54,7 +43,7 @@ export class AssetsController {
   })
   @Get(':uuid')
   getByAssetId(@Param('uuid') assetId: string) {
-    return this.alpacaAssetsService.getAsset(assetId)
+    return this.AssetsService.getAsset(assetId)
   }
 
   @ApiResponse({
@@ -67,6 +56,6 @@ export class AssetsController {
   })
   @Get(':symbol')
   getBySymbol(@Param('symbol') symbol: string) {
-    return this.alpacaAssetsService.getAsset(symbol)
+    return this.AssetsService.getAsset(symbol)
   }
 }
