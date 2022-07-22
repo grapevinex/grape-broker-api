@@ -4,5 +4,6 @@ pgadmin-data
 pgdata
 
 .env
-.serverless/*
+.DS_Store
 .serverless
+.idea

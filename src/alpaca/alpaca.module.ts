@@ -3,6 +3,7 @@ import { HttpModuleOptions } from '@nestjs/axios/dist/interfaces'
 import { HttpModule } from '@nestjs/axios'
 import { AlpacaAccountsService } from './service/alpaca.accounts.service'
 import { AlpacaAssetsService } from './service/alpaca.assets.service'
+import { AlpacaClockService } from './service/alpaca.clock.service'
 
 export interface AlpacaModuleOptions extends HttpModuleOptions {
   keyId: string
@@ -37,8 +38,12 @@ export class AlpacaModule {
           },
         }),
       ],
-      providers: [AlpacaAccountsService, AlpacaAssetsService],
-      exports: [AlpacaAccountsService, AlpacaAssetsService],
+      providers: [
+        AlpacaAccountsService,
+        AlpacaAssetsService,
+        AlpacaClockService,
+      ],
+      exports: [AlpacaAccountsService, AlpacaAssetsService, AlpacaClockService],
     }
   }
 }
