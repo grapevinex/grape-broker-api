@@ -2,7 +2,8 @@ node_modules
 dist
 pgadmin-data
 pgdata
-package-lock.json
 
 .env
+.DS_Store
 .serverless
+.idea
