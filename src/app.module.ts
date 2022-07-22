@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config'
 import { AccountsModule } from './accounts/accounts.module'
 import { AlpacaModule } from './alpaca/alpaca.module'
 import { AssetsModule } from './assets/assets.module'
+import { AnnouncementsModule } from './announcements/announcements.module'
 import { ClockModule } from './clock/clock.module'
 
 import typeOrmConfig from './typeorm.config'
@@ -16,6 +17,7 @@ import alpacaModuleConfig from './alpaca.config'
     AlpacaModule.register(alpacaModuleConfig()),
     AccountsModule,
     AssetsModule,
+    AnnouncementsModule,
     ClockModule,
   ],
   providers: [],
