@@ -1,12 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import { Observable } from 'rxjs'
-import {
-  AccountDto,
-  CipDto,
-  CreateAccountDto,
-} from '../../accounts/dto/accounts.dto'
-import { AccountStatus } from '../../accounts/interface/accounts.interface'
+import { AccountDto, CipDto, CreateAccountDto } from '../dto/accounts.dto'
+import { AccountStatus } from '../interface/accounts.interface'
 import { AxiosResponse } from 'axios'
 
 export interface GetAllAccountsOptions {
@@ -19,22 +15,18 @@ export interface GetAllAccountsOptions {
 }
 
 @Injectable()
-export class AlpacaAccountsService {
+export class AccountsService {
   constructor(private httpService: HttpService) {}
 
-  createAccount(
-    createAccountDto: CreateAccountDto,
-  ): Observable<AxiosResponse<AccountDto>> {
+  createAccount(createAccountDto: CreateAccountDto) {
     return this.httpService.post('/v1/accounts', createAccountDto)
   }
 
-  getAccount(id: string): Observable<AxiosResponse<AccountDto>> {
+  getAccount(id: string) {
     return this.httpService.get(`/v1/accounts/${id}`)
   }
 
-  getAllAccounts(
-    options: GetAllAccountsOptions,
-  ): Observable<AxiosResponse<AccountDto[]>> {
+  getAllAccounts(options: GetAllAccountsOptions) {
     return this.httpService.get('/v1/accounts', { params: options })
   }
 

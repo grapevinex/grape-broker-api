@@ -1,30 +1,20 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Query,
-  UseFilters,
-  UseInterceptors,
-} from '@nestjs/common'
-import { HttpExceptionFilter } from '../common/filters/http-expeption.filter'
-import { HttpResponseInterceptor } from '../common/interceptors/http-response.interceptor'
+import { Controller, Get, Param, Query } from '@nestjs/common'
+
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import {
   AnnouncementDto,
   CorporateActionType,
   DateType,
 } from './dto/announcement.dto'
-import { AlpacaAnnouncementService } from '../alpaca/service/alpaca.announcement.service'
+import { AnnouncementService } from './service/announcement.service'
 
 @ApiTags('Announcements')
 @Controller({
   path: 'corporate_actions/announcements',
   version: '1',
 })
-@UseFilters(HttpExceptionFilter)
-@UseInterceptors(HttpResponseInterceptor)
 export class AnnouncementsController {
-  constructor(private alpacaAnnouncementsService: AlpacaAnnouncementService) {}
+  constructor(private AnnouncementsService: AnnouncementService) {}
 
   @Get()
   @ApiQuery({
@@ -76,7 +66,7 @@ export class AnnouncementsController {
     @Query('cusip') cusip?: string,
     @Query('date_type') date_type?: DateType,
   ) {
-    return this.alpacaAnnouncementsService.getAllAnnouncements({
+    return this.AnnouncementsService.getAllAnnouncements({
       ca_types,
       since,
       until,
@@ -99,6 +89,6 @@ export class AnnouncementsController {
     type: AnnouncementDto,
   })
   getAnnouncement(@Param('id') id: string) {
-    return this.alpacaAnnouncementsService.getAnnouncement(id)
+    return this.AnnouncementsService.getAnnouncement(id)
   }
 }

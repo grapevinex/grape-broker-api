@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Observable } from 'rxjs'
-import { AssetDto } from '../../assets/dto/asset.dto'
+import { AssetDto } from '../dto/asset.dto'
 import { HttpService } from '@nestjs/axios'
 import { AxiosResponse } from 'axios'
 
@@ -10,14 +10,14 @@ export interface GetAssetsOptions {
 }
 
 @Injectable()
-export class AlpacaAssetsService {
+export class AssetsService {
   constructor(private httpService: HttpService) {}
 
-  getAssets(params: GetAssetsOptions): Observable<AxiosResponse<AssetDto[]>> {
+  getAssets(params: GetAssetsOptions) {
     return this.httpService.get('/v1/assets', { params })
   }
 
-  getAsset(assetId: string): Observable<AxiosResponse<AssetDto>> {
+  getAsset(assetId: string) {
     return this.httpService.get(`/v1/assets/${assetId}`)
   }
 }
