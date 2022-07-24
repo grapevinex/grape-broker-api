@@ -11,9 +11,8 @@ export class AlpacaMiddleware implements NestMiddleware {
   }
 
   async use(req: Request | any, res: Response, next: () => void) {
-    req.headers.authorization = this.generateAuthorizationToken(
-      alpacaModuleConfig(),
-    )
+    req.headers.authorization = `Basic ${this.generateAuthorizationToken(alpacaModuleConfig())}`
+    req.headers['Content-Type'] = 'application/json';
     req.baseURL = alpacaModuleConfig().baseURL
     next()
   }

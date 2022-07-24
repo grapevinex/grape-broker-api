@@ -5,7 +5,7 @@ import { AssetDto } from './dto/asset.dto'
 
 @ApiTags('Assets')
 @Controller({
-  path: 'assets',
+  path: 'broker/assets',
   version: '1',
 })
 export class AssetsController {
