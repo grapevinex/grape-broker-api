@@ -10,7 +10,7 @@ import { AnnouncementService } from './service/announcement.service'
 
 @ApiTags('Announcements')
 @Controller({
-  path: 'corporate_actions/announcements',
+  path: 'broker/corporate_actions/announcements',
   version: '1',
 })
 export class AnnouncementsController {

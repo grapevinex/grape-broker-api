@@ -5,7 +5,7 @@ import { ClockService } from './service/clock.service'
 
 @ApiTags('Clock')
 @Controller({
-  path: 'clock',
+  path: 'broker/clock',
   version: '1',
 })
 export class ClockController {

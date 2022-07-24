@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
-import { Observable } from 'rxjs'
-import { AccountDto, CipDto, CreateAccountDto } from '../dto/accounts.dto'
+import { CipDto, CreateAccountDto } from '../dto/accounts.dto'
 import { AccountStatus } from '../interface/accounts.interface'
-import { AxiosResponse } from 'axios'
 
 export interface GetAllAccountsOptions {
   query?: string
