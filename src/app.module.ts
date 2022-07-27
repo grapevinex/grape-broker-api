@@ -7,6 +7,7 @@ import { AnnouncementsModule } from './announcements/announcements.module'
 import { ClockModule } from './clock/clock.module'
 import typeOrmConfig from './typeorm.config'
 import { AlpacaMiddleware } from './common/middleware/alpaca.middleware'
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AlpacaMiddleware } from './common/middleware/alpaca.middleware'
     AssetsModule,
     AnnouncementsModule,
     ClockModule,
+    EventsModule,
   ],
 })
 export class AppModule {
