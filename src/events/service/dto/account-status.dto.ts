@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export enum CryptoStatus {
   INACTIVE = 'INACTIVE',
@@ -12,7 +12,7 @@ export enum CryptoStatus {
   ACTIVE = 'ACTIVE',
   SUBMISSION_FAILED = 'SUBMISSION_FAILED',
   DISABLED = 'DISABLED',
-  ACCOUNT_CLOSED = 'ACCOUNT_CLOSED'
+  ACCOUNT_CLOSED = 'ACCOUNT_CLOSED',
 }
 
 export enum KYCResults {
@@ -20,25 +20,25 @@ export enum KYCResults {
   INDETERMINATE = 'INDETERMINATE',
   REJECT = 'REJECT',
   additional_information = 'additional_information',
-  summary = 'summary'
+  summary = 'summary',
 }
 
 export class AccountStatusDto {
   @ApiProperty({
     type: String,
-    format: 'uuid'
+    format: 'uuid',
   })
   account_id: string
 
   @ApiProperty({
     type: String,
-    format: 'uuid'
+    format: 'uuid',
   })
   account_number: string
 
   @ApiProperty({
     type: String,
-    description: 'Timestamp of event'
+    description: 'Timestamp of event',
   })
   at: string
 
@@ -54,14 +54,14 @@ export class AccountStatusDto {
 
   @ApiProperty({
     type: Number,
-    description: 'Monotonically increasing 64bit integer'
+    description: 'Monotonically increasing 64bit integer',
   })
   event_id: number
 
   @ApiProperty({
     enum: KYCResults,
     nullable: true,
-    description: 'Results of KYC if applicable.'
+    description: 'Results of KYC if applicable.',
   })
   kyc_results: KYCResults
 

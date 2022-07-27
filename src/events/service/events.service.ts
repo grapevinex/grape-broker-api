@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import alpacaModuleConfig from '../../alpaca.config';
+import { Injectable } from '@nestjs/common'
+import { HttpService } from '@nestjs/axios'
+import alpacaModuleConfig from '../../alpaca.config'
 
 export interface AccountStatusProperties {
-  until: string;
-  since_id: string;
-  since: string;
+  until: string
+  since_id: string
+  since: string
   until_id: string
 }
 
@@ -13,43 +13,63 @@ export interface AccountStatusProperties {
 export class EventsService {
   constructor(private httpService: HttpService) {}
 
-  getAccountsStatus(param: AccountStatusProperties, baseUrl: string, authorization: string) {
+  getAccountsStatus(
+    param: AccountStatusProperties,
+    baseUrl: string,
+    authorization: string,
+  ) {
     return this.httpService.get(baseUrl + '/v1/events/trades', {
       headers: {
-        authorization
-      }
+        authorization,
+      },
     })
   }
 
-  getEventTrades(param: AccountStatusProperties, baseUrl: string, authorization: string) {
+  getEventTrades(
+    param: AccountStatusProperties,
+    baseUrl: string,
+    authorization: string,
+  ) {
     return this.httpService.get(baseUrl + '/v1/events/trades', {
       headers: {
-        authorization
-      }
+        authorization,
+      },
     })
   }
 
-  getEventsJournalsStatus(param: AccountStatusProperties, baseUrl: string, authorization: string) {
+  getEventsJournalsStatus(
+    param: AccountStatusProperties,
+    baseUrl: string,
+    authorization: string,
+  ) {
     return this.httpService.get(baseUrl + '/v1/events/journals/status', {
       headers: {
-        authorization
-      }
+        authorization,
+      },
     })
   }
 
-  getEventsTransfersStatus(param: AccountStatusProperties, baseUrl: string, authorization: string) {
+  getEventsTransfersStatus(
+    param: AccountStatusProperties,
+    baseUrl: string,
+    authorization: string,
+  ) {
     return this.httpService.get(baseUrl + '/v1/events/transfers/status', {
       headers: {
-        authorization
-      }
+        authorization,
+      },
     })
   }
 
-  getNTAEventsStatus(param: AccountStatusProperties, baseUrl: string, authorization: string) {
+  getNTAEventsStatus(
+    param: AccountStatusProperties,
+    baseUrl: string,
+    authorization: string,
+  ) {
     return this.httpService.get(baseUrl + '/v1/events/nta', {
       headers: {
-        authorization
-      }
+        authorization,
+      },
     })
   }
 }
