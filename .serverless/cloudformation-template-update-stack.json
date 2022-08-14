@@ -71,10 +71,10 @@
         }
       }
     },
-    "HelloLogGroup": {
+    "GrapeDashbrokerDashapiLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/grape-broker-api-staging-hello"
+        "LogGroupName": "/aws/lambda/grape-broker-api-staging-grape-broker-api"
       }
     },
     "IamRoleLambdaExecution": {
@@ -154,18 +154,18 @@
         }
       }
     },
-    "HelloLambdaFunction": {
+    "GrapeDashbrokerDashapiLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/grape-broker-api/staging/1657497216817-2022-07-10T23:53:36.817Z/hello.zip"
+          "S3Key": "serverless/grape-broker-api/staging/1660498089329-2022-08-14T17:28:09.329Z/grape-broker-api.zip"
         },
         "Handler": "src/handler.entry",
         "Runtime": "nodejs14.x",
-        "FunctionName": "grape-broker-api-staging-hello",
+        "FunctionName": "grape-broker-api-staging-grape-broker-api",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -176,17 +176,17 @@
         }
       },
       "DependsOn": [
-        "HelloLogGroup"
+        "GrapeDashbrokerDashapiLogGroup"
       ]
     },
-    "HelloLambdaVersion4pDvz2kA2NSIe58i3FCb3UsQdGIrIUloJOqrvIj8": {
+    "GrapeDashbrokerDashapiLambdaVersion8VPgg6nzYm8FuNUDy50YttfpY1JRkXv0gAVnZQrIL9c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "HelloLambdaFunction"
+          "Ref": "GrapeDashbrokerDashapiLambdaFunction"
         },
-        "CodeSha256": "nXReaump7kX4CJxRzyPtKRrLk6ULXygiEdouJuNz+5s="
+        "CodeSha256": "PfNwdTSmL0zWRjw9ec7zAfF5MQMao0pTj5yPQzfFj9o="
       }
     },
     "HttpApi": {
@@ -209,12 +209,31 @@
         }
       }
     },
-    "HelloLambdaPermissionHttpApi": {
+    "HttpApiAuthorizerAuth0": {
+      "Type": "AWS::ApiGatewayV2::Authorizer",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "Name": "auth0",
+        "IdentitySource": [
+          "$request.header.Authorization"
+        ],
+        "AuthorizerType": "JWT",
+        "JwtConfiguration": {
+          "Audience": [
+            "https://grape.finance/api/auth"
+          ],
+          "Issuer": "https://grape-finance.us.auth0.com/"
+        }
+      }
+    },
+    "GrapeDashbrokerDashapiLambdaPermissionHttpApi": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "HelloLambdaFunction",
+            "GrapeDashbrokerDashapiLambdaFunction",
             "Arn"
           ]
         },
@@ -246,7 +265,7 @@
         }
       }
     },
-    "HttpApiIntegrationHello": {
+    "HttpApiIntegrationGrapeDashbrokerDashapi": {
       "Type": "AWS::ApiGatewayV2::Integration",
       "Properties": {
         "ApiId": {
@@ -255,7 +274,7 @@
         "IntegrationType": "AWS_PROXY",
         "IntegrationUri": {
           "Fn::GetAtt": [
-            "HelloLambdaFunction",
+            "GrapeDashbrokerDashapiLambdaFunction",
             "Arn"
           ]
         },
@@ -263,26 +282,30 @@
         "TimeoutInMillis": 6500
       }
     },
-    "HttpApiRouteGet": {
+    "HttpApiRouteAnyProxyVar": {
       "Type": "AWS::ApiGatewayV2::Route",
       "Properties": {
         "ApiId": {
           "Ref": "HttpApi"
         },
-        "RouteKey": "GET /",
+        "RouteKey": "ANY /{proxy+}",
         "Target": {
           "Fn::Join": [
             "/",
             [
               "integrations",
               {
-                "Ref": "HttpApiIntegrationHello"
+                "Ref": "HttpApiIntegrationGrapeDashbrokerDashapi"
               }
             ]
           ]
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "HttpApiAuthorizerAuth0"
         }
       },
-      "DependsOn": "HttpApiIntegrationHello"
+      "DependsOn": "HttpApiIntegrationGrapeDashbrokerDashapi"
     }
   },
   "Outputs": {
@@ -294,13 +317,13 @@
         "Name": "sls-grape-broker-api-staging-ServerlessDeploymentBucketName"
       }
     },
-    "HelloLambdaFunctionQualifiedArn": {
+    "GrapeDashbrokerDashapiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersion4pDvz2kA2NSIe58i3FCb3UsQdGIrIUloJOqrvIj8"
+        "Ref": "GrapeDashbrokerDashapiLambdaVersion8VPgg6nzYm8FuNUDy50YttfpY1JRkXv0gAVnZQrIL9c"
       },
       "Export": {
-        "Name": "sls-grape-broker-api-staging-HelloLambdaFunctionQualifiedArn"
+        "Name": "sls-grape-broker-api-staging-GrapeDashbrokerDashapiLambdaFunctionQualifiedArn"
       }
     },
     "HttpApiId": {

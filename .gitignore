@@ -6,4 +6,5 @@ pgdata
 .env
 .DS_Store
 .serverless
+.serverless/*
 .idea
